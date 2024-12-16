@@ -11,7 +11,7 @@ import {
 import DarkLogo from "../assets/Logo/Dark-Logo.png";
 import { useNavigate } from "react-router-dom";
 
-function SideBar() {
+function SideBar({ handleLogin }) {
   const navigate = useNavigate();
 
   return (
@@ -56,7 +56,7 @@ function SideBar() {
 
       <div className="space-y-2 w-full">
         <button
-          onClick={() => navigate("/auth/login")}
+          onClick={handleLogin}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700 w-full"
         >
           <FiLogIn />
