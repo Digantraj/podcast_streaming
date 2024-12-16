@@ -6,7 +6,7 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 
-function NavBar({ toggleSidebar, isOpen }) {
+function NavBar({ toggleSidebar, isOpen, handleLogin }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const userName = "Mayank";
 
@@ -15,7 +15,7 @@ function NavBar({ toggleSidebar, isOpen }) {
   };
 
   return (
-    <nav className="bg-gray-800 px-4 py-2 shadow-md">
+    <nav className="bg-gray-900 px-4 py-3 shadow-md">
       <div className="flex items-center justify-between">
         <button
           onClick={toggleSidebar}
@@ -40,7 +40,10 @@ function NavBar({ toggleSidebar, isOpen }) {
         </div>
 
         <div>
-          <button className="flex border rounded-md p-1 px-2 justify-center items-center gap-2">
+          <button
+            onClick={handleLogin}
+            className="flex border rounded-md p-1 px-2 justify-center items-center gap-2"
+          >
             <FiUser size={24} />
             <span className="text-lg">Login</span>
           </button>

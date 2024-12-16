@@ -12,11 +12,11 @@ import {
 import DarkLogo from "../assets/Logo/Dark-Logo.png";
 import { useNavigate } from "react-router-dom";
 
-function SideBar({ handleLogin, isOpen }) {
+function SideBar({ handleLogin, isOpen, openUpload }) {
   const navigate = useNavigate();
 
   return (
-    <div className="h-full bg-gray-800 text-white flex flex-col justify-between p-2 transition-all duration-300">
+    <div className="h-full bg-gray-900 text-white flex flex-col justify-between p-2 transition-all duration-300">
       <div className="flex items-center justify-center text-white">
         {isOpen && <img src={DarkLogo} alt="PodTube" />}
       </div>
@@ -26,38 +26,38 @@ function SideBar({ handleLogin, isOpen }) {
           onClick={() => navigate("/")}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700"
         >
-          <FiHome  size={24}/>
+          <FiHome size={24} />
           {isOpen && <span>Dashboard</span>}
         </button>
         <button
           onClick={() => navigate("/search")}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700"
         >
-          <FiSearch size={24}/>
+          <FiSearch size={24} />
           {isOpen && <span>Search</span>}
         </button>
         <button
           onClick={() => navigate("favourite")}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700"
         >
-          <FiHeart size={24}/>
+          <FiHeart size={24} />
           {isOpen && <span>Favourite</span>}
         </button>
 
         <hr className="border-gray-700 my-2" />
 
         <button
-          onClick={() => navigate("upload")}
+          onClick={openUpload}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700"
         >
-          <FiUpload size={24}/>
+          <FiUpload size={24} />
           {isOpen && <span>Upload</span>}
         </button>
         <button
           onClick={() => navigate("profile")}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700"
         >
-          <FiUser size={24}/>
+          <FiUser size={24} />
           {isOpen && <span>Profile</span>}
         </button>
       </div>
@@ -67,7 +67,7 @@ function SideBar({ handleLogin, isOpen }) {
           onClick={handleLogin}
           className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg hover:bg-gray-700 w-full"
         >
-          <FiLogIn size={24}/>
+          <FiLogIn size={24} />
           {isOpen && <span>Login</span>}
         </button>
       </div>

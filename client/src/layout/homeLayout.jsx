@@ -3,13 +3,18 @@ import { Outlet } from "react-router-dom";
 import SideBar from "../components/sidebar";
 import NavBar from "../components/navbar";
 import Login from "../screen/auth/auth";
+import Upload from "../screen/upload";
 
 function HomeLayout() {
   const [isOpen, setIsOpen] = useState(true);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const handleLogin = () => {
     setIsLogin(!isLogin);
-    console.log("Login");
+  };
+
+  const handleUpload = () => {
+    setShowUploadModal(!showUploadModal);
   };
 
   const toggleSidebar = () => {
@@ -28,21 +33,29 @@ function HomeLayout() {
             isOpen={isOpen}
             toggleSidebar={toggleSidebar}
             handleLogin={handleLogin}
+            openUpload={handleUpload}
           />
         </div>
 
         <div className="flex-1 flex flex-col">
           <div className="bg-gray-800 text-white shadow-md">
-            <NavBar toggleSidebar={toggleSidebar} isOpen={isOpen} />
+            <NavBar
+              toggleSidebar={toggleSidebar}
+              isOpen={isOpen}
+              handleLogin={handleLogin}
+            />
           </div>
 
-          <div className="flex-1 overflow-scrollbar p-4 bg-gray-900 overflow-auto">
+          <div className="flex-1 overflow-scrollbar p-4 bg-gray-800 overflow-auto">
             <Outlet />
           </div>
         </div>
       </div>
       <div>
         <Login isLogin={isLogin} handleLogin={handleLogin} />
+      </div>
+      <div>
+        <Upload showUploadModal={showUploadModal} openUpload={handleUpload} />
       </div>
     </div>
   );

@@ -2,7 +2,9 @@ import React from 'react'
 
 function DisplayPod() {
   return (
-    <div>DisplayPod</div>
+    <div className='text-white'>
+      Hello
+    </div>
   )
 }
 
