@@ -20,10 +20,7 @@ function Upload({ openUpload, showUploadModal }) {
                 <h2 className="text-2xl font-bold text-center">
                   Upload Podcast
                 </h2>
-                <button
-                  onClick={openUpload}
-                  className=" text-black"
-                >
+                <button onClick={openUpload} className=" text-black">
                   X
                 </button>
               </div>
