@@ -25,7 +25,7 @@ function HomeLayout() {
     <div>
       <div className="flex h-screen ">
         <div
-          className={`bg-gray-900 lg:block hidden text-white transition-all duration-300 ${
+          className={`bg-[#F5F5F5] lg:block hidden text-[#333333] transition-all duration-300 ${
             isOpen ? "w-64" : "w-16"
           } h-full`}
         >
@@ -38,7 +38,7 @@ function HomeLayout() {
         </div>
 
         <div className="flex-1 flex flex-col">
-          <div className="bg-gray-800 text-white shadow-md">
+          <div className="bg-[#FFFF] text-[#333333]">
             <NavBar
               toggleSidebar={toggleSidebar}
               isOpen={isOpen}
@@ -46,7 +46,7 @@ function HomeLayout() {
             />
           </div>
 
-          <div className="flex-1 overflow-scrollbar p-4 bg-gray-800 overflow-auto">
+          <div className="flex-1 overflow-scrollbar p-4 bg-[#FAFAFA] overflow-auto">
             <Outlet />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { Profiler } from "react";
+import React, { Profiler, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./screen/dashboard";
 import HomeLayout from "./layout/homeLayout";
@@ -8,8 +8,27 @@ import Upload from "./screen/upload";
 import Profile from "./screen/profile";
 import DisplayPod from "./screen/displayPod";
 import PodDetails from "./screen/podDetails";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { authActions } from "./store/auth";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("/api/v1/check-cookies", {
+          withCredentials: true,
+        });
+        if (res.data.message === true) {
+          dispatch(authActions.login());
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetch();
+  }, []);
   return (
     <Router>
       <Routes>

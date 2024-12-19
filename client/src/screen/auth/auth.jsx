@@ -1,14 +1,108 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { authActions } from "../../store/auth";
+
 
 function Login({ isLogin, handleLogin }) {
   const [createPage, setCreatePage] = useState(false);
   const [forgotPassword, setForgotPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [value, setValue] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Input Handler
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValue((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Login Handler
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/v1/login", {
+        method: "POST",
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: value.email,
+          password: value.password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+      alert("Login Successful!");
+      dispatch(authActions.login());
+      navigate("/");
+      handleLogin();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Create Account Handler
+  const handleCreateAccountSubmit = async () => {
+    if (!value.username || !value.email || !value.password) {
+      setError("All fields are required");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/v1/signup", {
+        method: "POST",
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: value.username,
+          email: value.email,
+          password: value.password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Account creation failed");
+      }
+
+      alert("Account Created Successfully!");
+      setCreatePage(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Toggle Handlers
   const handleCreateToggle = () => {
+    setError("");
     setCreatePage((prev) => !prev);
   };
 
   const handleForgotPasswordToggle = () => {
+    setError("");
     setForgotPassword((prev) => !prev);
   };
 
@@ -47,12 +141,20 @@ function Login({ isLogin, handleLogin }) {
 
                 <input
                   type="email"
+                  value={value.email}
+                  onChange={(e) =>
+                    setValue({ ...value, email: e.target.value })
+                  }
                   placeholder="Email Address"
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
                 <input
                   type="password"
                   placeholder="Password"
+                  value={value.password}
+                  onChange={(e) =>
+                    setValue({ ...value, password: e.target.value })
+                  }
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
 
@@ -65,8 +167,12 @@ function Login({ isLogin, handleLogin }) {
                   </button>
                 </div>
 
-                <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-                  Sign In
+                <button
+                  className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+                  onClick={handleLoginSubmit}
+                  disabled={loading}
+                >
+                  {loading ? "Signing In..." : "Sign In"}
                 </button>
 
                 <p className="text-center text-sm text-gray-600 mt-4">
@@ -91,16 +197,28 @@ function Login({ isLogin, handleLogin }) {
                 <input
                   type="text"
                   placeholder="Full Name"
+                  value={value.username}
+                  onChange={(e) =>
+                    setValue({ ...value, username: e.target.value })
+                  }
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
                 <input
                   type="email"
                   placeholder="Email Address"
+                  value={value.email}
+                  onChange={(e) =>
+                    setValue({ ...value, email: e.target.value })
+                  }
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
                 <input
                   type="password"
                   placeholder="Password"
+                  value={value.password}
+                  onChange={(e) =>
+                    setValue({ ...value, password: e.target.value })
+                  }
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
                 <input
@@ -109,8 +227,12 @@ function Login({ isLogin, handleLogin }) {
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
 
-                <button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 mb-4">
-                  Create Account
+                <button
+                  className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 mb-4"
+                  onClick={handleCreateAccountSubmit}
+                  disabled={loading}
+                >
+                  {loading ? "Creating..." : "Create Account"}
                 </button>
 
                 <p className="text-center text-sm text-gray-600">
@@ -139,6 +261,10 @@ function Login({ isLogin, handleLogin }) {
                 <input
                   type="email"
                   placeholder="Email Address"
+                  value={value.email}
+                  onChange={(e) =>
+                    setValue({ ...value, email: e.target.value })
+                  }
                   className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring focus:ring-blue-300"
                 />
 

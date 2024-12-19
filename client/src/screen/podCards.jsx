@@ -11,10 +11,10 @@ function PodCards() {
   };
   return (
     <div>
-      <div className="w-64 bg-gray-800 p-2 rounded-lg overflow-hidden shadow-lg relative group hover:-translate-y-1 transition-all duration-300">
+      <div className="w-64 bg-gray-200 p-2 rounded-lg overflow-hidden shadow-lg relative group hover:-translate-y-1 transition-all duration-300">
         <button
           onClick={handleHeart}
-          className="absolute top-2 right-2 bg-gray-800 p-2 shadow-lg rounded-full transition-all duration-300"
+          className="absolute top-2 right-2 bg-gray-50 p-2 shadow-lg rounded-full transition-all duration-300"
         >
           {heartRed ? (
             <span className="transition-transform transform scale-125 ease-in-out duration-200">
@@ -22,7 +22,7 @@ function PodCards() {
             </span>
           ) : (
             <span className="transition-transform transform scale-100 ease-in-out duration-200">
-              <FaHeart className="text-gray-300 cursor-pointer" />
+              <FaHeart className="text-[#E0E0E0] cursor-pointer" />
             </span>
           )}
         </button>
@@ -34,16 +34,16 @@ function PodCards() {
           />
 
           <div className="absolute right-4 top-32 opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <button className="bg-gray-600 p-3 rounded-full shadow-lg hover:bg-gray-700">
+            <button className="bg-[#FF5722] p-3 rounded-full shadow-lg hover:bg-gray-700">
               <FiHeadphones className="text-white" />
             </button>
           </div>
 
           <div className="p-3">
-            <h3 className="text-white font-bold text-lg">
+            <h3 className="text-gray-700 font-bold text-lg">
               The Tim Ferriss Show
             </h3>
-            <p className="text-gray-400 text-sm mt-1">
+            <p className="text-gray-500 text-sm mt-1">
               The Tim Ferriss Show is a podcast hosted by Tim Ferriss, an
               author,...
             </p>
@@ -56,9 +56,9 @@ function PodCards() {
                 alt="User"
                 className="w-6 h-6 rounded-full"
               />
-              <p className="text-gray-300 text-xs font-medium">RISHAV CHANDA</p>
+              <p className="text-gray-600 text-xs font-medium">RISHAV CHANDA</p>
             </div>
-            <p className="text-gray-400 text-xs">• 1185 Views</p>
+            <p className="text-gray-700 text-xs">• 1185 Views</p>
           </div>
         </Link>
       </div>

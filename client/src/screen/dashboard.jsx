@@ -23,9 +23,9 @@ function Dashboard() {
     <div>
       <div className="flex flex-col gap-5">
         {cardData.map((card, index) => (
-          <div key={index} className="bg-gray-900  rounded-xl p-3">
+          <div key={index} className="bg-gray-100  rounded-xl p-3">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl text-white font-bold">{card.title}</h2>
+              <h2 className="text-2xl text-gray-900 font-bold">{card.title}</h2>
               <Link
                 to={`/showpodcasts/${card.link}`}
                 className="text-violet-500"

@@ -24,20 +24,20 @@ const PodTubeSearch = () => {
   );
 
   return (
-    <div className="bg-gray-800 min-h-screen px-6 py-4">
+    <div className="bg-gray-100 rounded-xl min-h-screen px-6 py-4">
       <div className="flex justify-center w-full items-center mb-8">
-        <div className="flex items-center lg:max-w-[30vw] w-full bg-gray-800 overflow-hidden relative">
+        <div className="flex items-center lg:max-w-[30vw] w-full overflow-hidden relative">
           <input
             type="text"
             placeholder="Search Artist/Podcast"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-5 py-2 pl-10 border rounded-l-full bg-transparent text-white placeholder-gray-400 outline-none"
+            className="flex-1 px-5 py-2 pl-10 border-2 rounded-l-full bg-transparent text-white placeholder-gray-400 outline-none"
           />
           <FiSearch className="absolute left-4 text-gray-400 text-lg" />
           <button
             onClick={() => console.log("Searching:", searchQuery)}
-            className="bg-gray-700 text-white px-6 py-2 border rounded-r-full hover:bg-gray-600 focus:outline-none"
+            className="bg-gray-300 text-black px-6 py-2 border-2 rounded-r-full hover:bg-gray-400 focus:outline-none"
           >
             Search
           </button>
@@ -45,7 +45,7 @@ const PodTubeSearch = () => {
       </div>
 
       <div>
-        <h2 className="text-white text-2xl font-bold mb-4">Browse All</h2>
+        <h2 className="text-gray-800 text-2xl font-bold mb-4">Browse All</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {filteredCategories.length > 0 ? (
             filteredCategories.map((category) => (
