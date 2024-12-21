@@ -6,7 +6,6 @@ const Category = require("../models/category");
 const Podcast = require("../models/podcast");
 const User = require("../models/user");
 
-
 // Create a podcast
 router.post("/add-podcast", authMiddleware, upload, async (req, res) => {
   try {
@@ -17,11 +16,13 @@ router.post("/add-podcast", authMiddleware, upload, async (req, res) => {
     if (!title || !description || !category || !frontImage || !audioFile) {
       return res.status(400).json({ error: "All fields are required" });
     }
+
     const { user } = req;
     const cat = await Category.findOne({ categoryName: category });
     if (!cat) {
       return res.status(400).json({ error: "Category does not exist" });
     }
+    
     const catId = cat._id;
     const userId = user._id;
     const newPodcast = new Podcast({
@@ -62,7 +63,7 @@ router.get("/my-podcasts", authMiddleware, async (req, res) => {
   try {
     const { user } = req;
     const userId = user._id;
-    const podcasts = await Podcast.findById(userId)
+    const data = await Podcast.findById(userId)
       .populate({
         path: "podcasts",
         populate: { path: "category" },
@@ -80,7 +81,7 @@ router.get("/my-podcasts", authMiddleware, async (req, res) => {
 });
 
 // Get podcasts by id
-router.get("/get-podcast/:id", async (req, res) => {
+router.get("/get-podcasts/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const podcast = await Podcast.findById(id).populate("category");

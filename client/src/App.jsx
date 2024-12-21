@@ -39,7 +39,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/podcast/:id" exact element={<PodDetails />} />
-          <Route path="/showpodcasts/:type" exact element={<DisplayPod />} />
+          <Route path="/showpodcasts/:category" exact element={<DisplayPod />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Route>
       </Routes>

@@ -4,6 +4,7 @@ import SideBar from "../components/sidebar";
 import NavBar from "../components/navbar";
 import Login from "../screen/auth/auth";
 import Upload from "../screen/upload";
+import AudioPlayer from "../screen/audioPlayer";
 
 function HomeLayout() {
   const [isOpen, setIsOpen] = useState(true);
@@ -25,7 +26,7 @@ function HomeLayout() {
     <div>
       <div className="flex h-screen ">
         <div
-          className={`bg-[#F5F5F5] lg:block hidden text-[#333333] transition-all duration-300 ${
+          className={`bg-[#F5F5F5] block text-[#333333] transition-all duration-300 ${
             isOpen ? "w-64" : "w-16"
           } h-full`}
         >
@@ -48,6 +49,10 @@ function HomeLayout() {
 
           <div className="flex-1 overflow-scrollbar p-4 bg-[#FAFAFA] overflow-auto">
             <Outlet />
+          </div>
+
+          <div className="w-full bg-[#FFFF] text-[#333333]">
+            <AudioPlayer />
           </div>
         </div>
       </div>

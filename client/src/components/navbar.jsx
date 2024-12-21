@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiMenu, FiUser } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import {
@@ -17,6 +17,24 @@ function NavBar({ toggleSidebar, isOpen, handleLogin }) {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get("/api/v1/user");
+          setUserData(response.data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchUserData();
+    }
+  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     try {
@@ -47,10 +65,16 @@ function NavBar({ toggleSidebar, isOpen, handleLogin }) {
         >
           <FiMenu className="text-xl" />
         </button>
-
-        <div className="flex-1 text-center text-[#333333] text-lg font-semibold">
-          Hi, {userName}
-        </div>
+        {isLoggedIn && (
+          <div className="flex-1 text-center text-[#333333] text-lg font-semibold">
+            Hi, {userData?.name}
+          </div>
+        )}
+        {!isLoggedIn && (
+          <div className="flex-1 text-center text-[#333333] text-lg font-semibold">
+            Hi, Guest
+          </div>
+        )}
 
         {!isLoggedIn && (
           <div>

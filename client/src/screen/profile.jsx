@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PodCards from "./podCards";
+import PodCards from "./podCards"; 
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
@@ -8,12 +8,28 @@ function Profile() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [podcasts, setPodcasts] = useState([]);
+
+  useEffect(() => {
+    const fetchPodcasts = async () => {
+      try {
+        const res = await axios.get("/api/v1/my-podcasts");
+        setPodcasts(res.data.data);
+      } catch (error) {
+        console.error("Error fetching podcasts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPodcasts();
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get("/api/v1/user"); 
+          const response = await axios.get("/api/v1/user");
           setUserData(response.data);
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -31,11 +47,11 @@ function Profile() {
   }
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (!userData) {
-    return <div>Error loading profile.</div>; 
+    return <div>Error loading profile.</div>;
   }
 
   return (
@@ -48,9 +64,7 @@ function Profile() {
             alt="Profile"
             className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-gray-700"
           />
-          <h1 className="text-2xl text-gray-800 font-bold mb-1">
-            {userData.name}
-          </h1>
+          <h1 className="text-2xl text-gray-800 font-bold mb-1">{userData.name}</h1>
           <p className="text-gray-800 mb-2">{userData.email}</p>
           <div className="flex justify-center gap-6 mt-2">
             <div className="text-center">
@@ -68,19 +82,18 @@ function Profile() {
           </div>
         </div>
       </div>
-
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Favorite Podcasts
-        </h2>
-        <div className="grid rounded-xl bg-gray-200 items-center p-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <PodCards />
-          <PodCards />
-          <PodCards />
-          <PodCards />
-          <PodCards />
+      {podcasts.length > 0 ? (
+        <div className="mt-6">
+          <h2 className="text-2xl text-gray-800 font-bold mb-4">Your Podcasts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {podcasts.map((podcast, i) => (
+              <PodCards key={i} items={podcast} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-6">No podcasts available</div>
+      )}
     </div>
   );
 }
