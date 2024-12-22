@@ -169,11 +169,18 @@ function Upload({ openUpload, showUploadModal }) {
                   className="w-full border rounded px-3 py-2"
                 >
                   <option value="select">Select Category</option>
-                  <option value="Technology">Technology</option>
+                  <option value="Culture">Culture</option>
                   <option value="Music">Music</option>
                   <option value="Education">Education</option>
-                  <option value="Lifestyle">Lifestyle</option>
+                  <option value="Health">Health</option>
+                  <option value="Comedy">Comedy</option>
                   <option value="News">News</option>
+                  <option value="Science">Science</option>
+                  <option value="History">History</option>
+                  <option value="Religion">Religion</option>
+                  <option value="Development">Development</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Crime">Crime</option>
                 </select>
               </div>
 

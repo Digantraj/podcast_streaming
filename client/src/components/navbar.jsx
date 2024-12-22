@@ -7,6 +7,7 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 import { useSelector } from "react-redux";
+import ProfileImg from '../assets/Logo/ltx9i2fys9l91.png'
 
 function NavBar({ toggleSidebar, isOpen, handleLogin }) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -94,7 +95,7 @@ function NavBar({ toggleSidebar, isOpen, handleLogin }) {
               className="flex items-center gap-2 text-white  rounded-lg focus:outline-none"
             >
               <img
-                src="https://via.placeholder.com/40"
+                src={ProfileImg}
                 alt="User Avatar"
                 className="w-12 h-12 rounded-full"
               />

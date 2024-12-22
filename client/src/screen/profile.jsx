@@ -3,6 +3,7 @@ import PodCards from "./podCards";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import ProfileImg from '../assets/Logo/ltx9i2fys9l91.png'
 
 function Profile() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -60,13 +61,13 @@ function Profile() {
         <h2 className="text-2xl text-gray-800 font-bold mb-4">Your Profile</h2>
         <div className="flex flex-col items-center bg-gray-200 rounded-xl p-6">
           <img
-            src={userData.profileImage}
+            src={ProfileImg}
             alt="Profile"
             className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-gray-700"
           />
           <h1 className="text-2xl text-gray-800 font-bold mb-1">{userData.name}</h1>
           <p className="text-gray-800 mb-2">{userData.email}</p>
-          <div className="flex justify-center gap-6 mt-2">
+          {/* <div className="flex justify-center gap-6 mt-2">
             <div className="text-center">
               <p className="text-2xl text-gray-800 font-bold">
                 {userData.totalViews}
@@ -79,7 +80,7 @@ function Profile() {
               </p>
               <p className="text-sm text-gray-500">Total Likes</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {podcasts.length > 0 ? (

@@ -73,7 +73,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PodCards from "./PodCards";
+import PodCards from "./podCards";
 import axios from "axios";
 
 function Dashboard() {
