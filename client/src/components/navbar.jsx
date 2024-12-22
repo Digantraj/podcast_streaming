@@ -13,7 +13,7 @@ function NavBar({ toggleSidebar, isOpen, handleLogin }) {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log(isLoggedIn);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const userName = "Mayank";
+  const [loading, setLoading] = useState(true);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -45,6 +45,10 @@ function NavBar({ toggleSidebar, isOpen, handleLogin }) {
       console.log(error);
     }
   };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <nav className="bg-[#FFFFFF] px-4 py-3">

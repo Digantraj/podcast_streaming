@@ -77,13 +77,13 @@ function AudioPlayer() {
       </div>
 
       <div className="w-full md:w-2/4 flex flex-col items-center">
-        <div className="text-center text-sm font-semibold text-white mb-2">
+        {/* <div className="text-center text-sm font-semibold text-white mb-2">
           <p>Now Playing</p>
           <p className="truncate">
             {songPath ? songPath.split("/").pop() : "No song selected"}
           </p>
-        </div>
-
+        </div> */}
+        
         <div className="w-full flex justify-center gap-6 text-2xl mb-3">
           <button className="hover:text-red-500 transition-colors">
             <IoPlaySkipBack />
