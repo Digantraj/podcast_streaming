@@ -46,9 +46,13 @@ function NavBar({ toggleSidebar, isOpen, handleLogin }) {
     }
   };
 
-  if (loading) {
-    return null;
-  }
+  // if (loading) {
+  //   return (
+  //     <div>
+  //       Loading
+  //     </div>
+  //   );
+  // }
 
   return (
     <nav className="bg-[#FFFFFF] px-4 py-3">
