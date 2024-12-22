@@ -3,6 +3,7 @@ import axios from "axios";
 
 function Upload({ openUpload, showUploadModal }) {
   const [thumbnail, setThumbnail] = useState(null);
+  const [imgae, setImage] = useState(null);
   const [audio, setAudio] = useState(null);
   const [inputValues, setInputValues] = useState({
     title: "",
@@ -10,28 +11,42 @@ function Upload({ openUpload, showUploadModal }) {
     category: "",
   });
 
+  const changeInput = (e) => {
+    const { name, value } = e.target;
+    setInputValues({ ...inputValues, [name]: value });
+  };
+
   const handleThumbnailUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setThumbnail(URL.createObjectURL(file));
+      setThumbnail(file);
+      setImage(URL.createObjectURL(file));
     }
   };
 
   const handleAudioUpload = (e) => {
-    e.preventDefault();
     const file = e.target.files[0];
     if (file) {
       setAudio(file);
     }
   };
 
-  const changeInput = (e) => {
-    const { name, value } = e.target;
-    setInputValues({ ...inputValues, [name]: value });
-  };
-
   const submitPodcast = async () => {
-    console.log(inputValues, thumbnail, audio);
+    if (
+      !inputValues.title ||
+      !inputValues.description ||
+      !inputValues.category ||
+      !thumbnail ||
+      !audio
+    ) {
+      console.log("All fields are required");
+      return;
+    }
+    if (inputValues.category === "select") {
+      console.log("Please select a valid category");
+      return;
+    }
+
     const data = new FormData();
     data.append("title", inputValues.title);
     data.append("description", inputValues.description);
@@ -40,23 +55,26 @@ function Upload({ openUpload, showUploadModal }) {
     data.append("audioFile", audio);
 
     try {
-      const res = await axios.post("/api/v1/add-podcast", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        "http://localhost:5003/api/v1/add-podcast",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
       console.log(res.data.message);
+      openUpload();
     } catch (err) {
-      console.log(err.response.data.message);
-    }finally{
-      setInputValues({
-        title: "",
-        description: "",
-        category: "",
-      });
+      console.error(err.response?.data || "An unknown error occurred");
+    } finally {
+      setInputValues({ title: "", description: "", category: "" });
       setThumbnail(null);
       setAudio(null);
+      document.getElementById("thumbnail-upload").value = "";
+      document.getElementById("audioFile").value = "";
     }
   };
 
@@ -82,7 +100,7 @@ function Upload({ openUpload, showUploadModal }) {
                 >
                   {thumbnail ? (
                     <img
-                      src={thumbnail}
+                      src={imgae}
                       alt="Thumbnail"
                       className="w-32 h-32 object-cover rounded-lg"
                     />

@@ -20,7 +20,7 @@ const podcasts = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      unique: true,
+      // unique: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

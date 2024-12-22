@@ -10,39 +10,37 @@ const User = require("../models/user");
 router.post("/add-podcast", authMiddleware, upload, async (req, res) => {
   try {
     const { title, description, category } = req.body;
-    const frontImage = req.files.frontImage[0].path;
-    const audioFile = req.files.audioFile[0].path;
+    const frontImage = req.files?.frontImage?.[0]?.path;
+    const audioFile = req.files?.audioFile?.[0]?.path;
 
     if (!title || !description || !category || !frontImage || !audioFile) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({ error: "All fields are required, including files" });
     }
-
-    const { user } = req;
-    const cat = await Category.findOne({ categoryName: category });
+    const cat = await Category.findOne({ categoryName: category.trim() });
     if (!cat) {
       return res.status(400).json({ error: "Category does not exist" });
     }
-    
-    const catId = cat._id;
-    const userId = user._id;
+
+    const { user } = req;
     const newPodcast = new Podcast({
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       frontImage,
       audioFile,
-      user: userId,
-      category: catId,
+      user: user._id,
+      category: cat._id,
     });
+
     await newPodcast.save();
-    await Category.findByIdAndUpdate(catId, {
-      $push: { podcasts: newPodcast._id },
-    });
-    await User.findByIdAndUpdate(userId, {
-      $push: { podcasts: newPodcast._id },
-    });
-    return res.status(200).json({ message: "Podcast created successfully" });
+    await Promise.all([
+      Category.findByIdAndUpdate(cat._id, { $addToSet: { podcasts: newPodcast._id } }),
+      User.findByIdAndUpdate(user._id, { $addToSet: { podcasts: newPodcast._id } }),
+    ]);
+
+    return res.status(200).json({ message: "Podcast created successfully", podcast: newPodcast });
   } catch (err) {
-    return res.status(500).json({ message: "Faild to Creating Podcast" });
+    console.error(err);
+    return res.status(500).json({ message: "Failed to create podcast" });
   }
 });
 
@@ -63,22 +61,22 @@ router.get("/my-podcasts", authMiddleware, async (req, res) => {
   try {
     const { user } = req;
     const userId = user._id;
-    const data = await Podcast.findById(userId)
-      .populate({
-        path: "podcasts",
-        populate: { path: "category" },
-      })
-      .select("-password");
-    if (data && data.podcasts) {
-      data.podcasts.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
+
+    const podcasts = await Podcast.find({ user: userId })
+      .populate("category")
+      .sort({ createdAt: -1 }); 
+
+    if (!podcasts) {
+      return res.status(404).json({ message: "No podcasts found" });
     }
-    return res.status(200).json({ data: data.podcasts });
+
+    return res.status(200).json({ data: podcasts });
   } catch (err) {
+    console.error(err); 
     return res.status(500).json({ message: "Failed to get podcasts" });
   }
 });
+
 
 // Get podcasts by id
 router.get("/get-podcasts/:id", async (req, res) => {
