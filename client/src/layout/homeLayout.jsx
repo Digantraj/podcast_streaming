@@ -26,7 +26,7 @@ function HomeLayout() {
     <div>
       <div className="flex h-screen ">
         <div
-          className={`bg-[#F5F5F5] block text-[#333333] transition-all duration-300 ${
+          className={`bg-[#F5F5F5] lg:block hidden block text-[#333333] transition-all duration-300 ${
             isOpen ? "w-64" : "w-16"
           } h-full`}
         >
@@ -44,6 +44,7 @@ function HomeLayout() {
               toggleSidebar={toggleSidebar}
               isOpen={isOpen}
               handleLogin={handleLogin}
+              openUpload={handleUpload}
             />
           </div>
 

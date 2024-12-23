@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authActions } from "../../store/auth";
+import { toast, ToastContainer } from "react-toastify";
 
 function Login({ isLogin, handleLogin }) {
   const [createPage, setCreatePage] = useState(false);
@@ -48,7 +49,8 @@ function Login({ isLogin, handleLogin }) {
 
       const data = await response.json();
       console.log("Login successful:", data);
-      alert("Login Successful!");
+      // alert("Login Successful!");
+      toast.success("Login Successful!");
       dispatch(authActions.login());
       navigate("/");
       handleLogin();
@@ -62,7 +64,8 @@ function Login({ isLogin, handleLogin }) {
   // Create Account Handler
   const handleCreateAccountSubmit = async () => {
     if (!value.username || !value.email || !value.password) {
-      setError("All fields are required");
+      // setError("All fields are required");
+      toast.error("All fields are required");
       return;
     }
 
@@ -85,7 +88,8 @@ function Login({ isLogin, handleLogin }) {
         throw new Error(errorData.message || "Account creation failed");
       }
 
-      alert("Account Created Successfully!");
+      // alert("Account Created Successfully!");
+      toast.success("Account Created Successfully!");
       setCreatePage(false);
     } catch (err) {
       setError(err.message);
@@ -285,6 +289,17 @@ function Login({ isLogin, handleLogin }) {
           </div>
         </div>
       )}
+      <ToastContainer 
+        position="bottom-right" 
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick 
+        rtl={false} 
+        pauseOnFocusLoss 
+        draggable 
+        pauseOnHover
+      />
     </>
   );
 }

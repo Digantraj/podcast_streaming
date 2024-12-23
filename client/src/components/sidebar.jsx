@@ -69,7 +69,9 @@ function SideBar({ handleLogin, isOpen, openUpload }) {
         )}
         {!isLoggedIn && (
           <button
-            onClick={handleLogin}
+            onClick={() => {
+              handleLogin();
+            }}
             className="flex items-center space-x-3 px-3 py-2 text-lg font-medium rounded-lg text-[#333333] hover:bg-[#FF5722]"
           >
             <FiUpload size={24} />

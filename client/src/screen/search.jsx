@@ -16,6 +16,7 @@ import religionImage from "../assets/Images/religion.jpg";
 import developmentImage from "../assets/Images/development.jpeg";
 import sportsImage from "../assets/Images/sports.png";
 import crimeImage from "../assets/Images/crime.jpg";
+import { toast } from "react-toastify";
 
 const categories = [
   { title: "Culture", color: "#FF5733", image: cultureImage },
@@ -43,7 +44,8 @@ const PodTubeSearch = () => {
         const res = await axios.get("/api/v1/get-podcasts");
         setPodcasts(res.data.data);
       } catch (error) {
-        console.error("Error fetching podcasts:", error);
+        // console.error("Error fetching podcasts:", error);
+        toast.error("Error fetching podcasts");
       }
     };
 
@@ -58,7 +60,8 @@ const PodTubeSearch = () => {
     if (categoryData.length > 0) {
       navigate(`/showpodcasts/${categoryTitle}`, { state: { data: categoryData } });
     } else {
-      alert(`No data found for the ${categoryTitle} category.`);
+      // alert(`No data found for the ${categoryTitle} category.`);
+      toast.error(`No data found for the ${categoryTitle} category.`);
     }
   };
 

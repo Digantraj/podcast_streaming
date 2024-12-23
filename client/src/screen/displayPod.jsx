@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import PodCards from "./PodCards";
+import PodCards from "./podCards";
 
 function DisplayPod() {
   const { category } = useParams();
@@ -23,7 +23,7 @@ function DisplayPod() {
     };
 
     fetchCategoryPodcasts();
-  }, [category]); // Use `category` in the dependency array
+  }, [category]); 
 
   return (
     <div className="text-white">
