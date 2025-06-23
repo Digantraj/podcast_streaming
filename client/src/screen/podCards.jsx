@@ -40,7 +40,7 @@ function PodCards({ items }) {
           src={
             `http://localhost:5003/${items.frontImage}` || "default-image.jpg"
           }
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover"
           alt={items.title || "Image"}
           onError={(e) => (e.target.src = "default-image.jpg")}
         />
@@ -78,7 +78,7 @@ function PodCards({ items }) {
       </div>
 
       <div className="text-center absolute left-0 right-0 bottom-0 px-4 py-6">
-        <h1 className="mb-2 text-xl font-semibold text-gray-800 hover:text-gray-900 cursor-pointer transition-colors duration-300">
+        <h1 className="mb-2 text-xl line-clamp-1 font-semibold text-gray-800 hover:text-gray-900 cursor-pointer transition-colors duration-300">
           {items.title || "Podcast Title"}
         </h1>
         <p className="text-sm text-gray-600 mb-4 line-clamp-2">
